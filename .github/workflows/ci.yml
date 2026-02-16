@@ -1,0 +1,25 @@
+name: API Automation CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Postman Collection
+        run: newman run postman/Booking\ API\ Automation.postman_collection.json -e postman/Book-Env.postman_environment.json
